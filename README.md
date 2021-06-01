@@ -44,7 +44,7 @@ with
             user_id,
             session_id,
             level,
-            (max(sp.start_time) - min(sp.start_time))::float / (1000 * 60) as session_length_mins
+            extract(epoch from max(sp.start_time) - min(sp.start_time))/60 as session_length_mins
         from songplays as sp
         join time as t
             on sp.start_time = t.start_time
