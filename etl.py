@@ -8,6 +8,9 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    Opens song data file and inserts data into respective dim table
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -31,6 +34,9 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    Opens log data file and inserts data into fact table and dim tables
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -90,6 +96,9 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Loops over all JSON files at `filepath` and processes data using `func`
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -109,6 +118,9 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    Main function that executes ETL on song and log data
+    """
     conn = psycopg2.connect(
         "host=127.0.0.1 dbname=sparkifydb user=student password=student"
     )
